@@ -1,0 +1,30 @@
+{
+    "name": "train-tracker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon server.js",
+        "lint": "eslint . -c .eslintrc.json --ext js"
+    },
+    "author": "Noah Fleischmann",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^5.14.1",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-config-prettier": "^4.1.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-prettier": "^3.0.1",
+        "nodemon": "^1.18.10"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4",
+        "googleapis": "^37.2.0",
+        "moment": "^2.24.0",
+        "mongoose": "^5.4.15",
+        "morgan": "^1.9.1"
+    }
+}
