@@ -10,14 +10,14 @@
 		web.vm.provider "virtualbox" do |vb|
 			vb.memory = "1024"  
 		end
-  	web.vm.synced_folder "src", "/var/www/html"  
+  		web.vm.synced_folder "src", "/vagrant"  
 		web.vm.provision "shell", path: "server.sh"
   end
 
 	config.vm.define "db" do |db|
 		db.vm.box = "ubuntu/xenial64"
 		db.vm.hostname = "mongodb"
-		db.vm.network "private_network", ip:"192.168.55.101"
+		db.vm.network "private_network", ip: "192.168.55.101"
 		db.vm.provider "virtualbox" do |vb|
 			vb.memory = "1024"  
 		end

@@ -9,8 +9,8 @@ const stationboardRoutes = require("./api/routes/stationboard");
 const journeyRoutes = require("./api/routes/journey");
 const statsRoutes = require("./api/routes/stats");
 
-mongoose.connect("mongodb://p3cs:HgxSY82aCug7vgPoop6CIOg@ds349065.mlab.com:49065/train-tracker", {
-    useNewUrlParser: true,
+mongoose.connect("mongodb://192.168.55.101:49065/train-tracker", {
+    useNewUrlParser: true
 });
 
 mongoose.Promise = global.Promise;
@@ -46,8 +46,8 @@ app.use((error, req, res) => {
     res.status(error.status || 500);
     res.json({
         error: {
-            message: error.message,
-        },
+            message: error.message
+        }
     });
 });
 
