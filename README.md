@@ -13,7 +13,15 @@
 
 ## Abschnitt: Vagrant
 
-### Projekt NodeJS und MongoDB
+### Projekt Apache und MySQL
+
+    +--------------------+          +---------------------+
+    ! Web Server         !          ! Datenbank Server    !
+    ! Host: web          !          ! Host: db            !
+    ! IP: 192.168.55.101 ! <------> ! IP: 192.168.55.100  !
+    ! Port: 80           !          ! Port 3306           !
+    ! Nat: 8080          !          ! Nat: -              !
+    +--------------------+          +---------------------+
 
 ### Kennt die Vagrant-Befehlte
 

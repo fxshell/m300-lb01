@@ -3,19 +3,38 @@
 #	Datenbank installieren und Konfigurieren
 #
 
+apt update -y
 
-echo -----------------------------------------------------------------
-echo -                           MongoDB                             -
-echo -----------------------------------------------------------------
+# root Password setzen, damit kein Dialog erscheint und die Installation haengt!
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password S3cr3tp4ssw0rd'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password S3cr3tp4ssw0rd'
 
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
+# Installation
+sudo apt-get install -y mysql-server
 
-mkdir -p /data/db
-chmod -R 777 /data/db
+# MySQL Port oeffnen
+sudo sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
-sed -i -e 's/127.0.0.1/192.168.55.101/g' /etc/mongod.conf
+# User fuer Remote Zugriff einrichten - aber nur fuer Host web 192.168.55.100
+mysql -uroot -pS3cr3tp4ssw0rd <<%EOF%
+	CREATE USER 'root'@'192.168.55.100' IDENTIFIED BY 'admin';
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.55.100';
+	FLUSH PRIVILEGES;
+%EOF%
 
-service mongod start
+# Datenbank und User fuer IoT Daten anlegen 
+mysql -uroot -pS3cr3tp4ssw0rd <<%EOF%
+	create database if not exists sensoren;
+	create user 'www-data'@'localhost' identified by 'mbed'; 
+	grant usage on *.* to 'www-data'@'192.168.55.100' identified by 'mbed';
+	grant all privileges on sensoren.* to 'www-data'@'192.168.55.100';
+	flush privileges;
+	use sensoren;
+	create table data ( seq INT PRIMARY KEY AUTO_INCREMENT, poti FLOAT, light FLOAT, hall FLOAT, temp FLOAT, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
+	insert into data(poti, light, hall, temp) values ( 0.9, 0.8, 0.49, 25.2 );
+	insert into data(poti, light, hall, temp) values ( 0.8, 0.7, 0.48, 25.1 );
+%EOF%
+
+
+# Restart fuer Konfigurationsaenderung
+sudo service mysql restart

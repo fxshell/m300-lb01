@@ -10,7 +10,7 @@
 		web.vm.provider "virtualbox" do |vb|
 			vb.memory = "1024"  
 		end
-  		web.vm.synced_folder "src", "/vagrant"  
+		web.vm.synced_folder "src", "/var/www/html"  
 		web.vm.provision "shell", path: "server.sh"
   end
 
