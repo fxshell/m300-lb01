@@ -1,1 +1,0 @@
-{"virtualbox":{"/var/www/html":{"guestpath":"/var/www/html","hostpath":"/Users/noah/Repos/m300-lb01/src","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/noah/Repos/m300-lb01","disabled":false,"__vagrantfile":true}}}
