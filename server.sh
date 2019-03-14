@@ -3,6 +3,9 @@
 #	Datenbank installieren und Konfigurieren
 #
 
+ufw enable
+ufw allow from 192.168.40.99 to any http
+ufw allow from 192.168.40.1 to any port 22
 
 apt-get update -y
 apt-get -y install apache2
