@@ -6,9 +6,9 @@
 		proxy.vm.box = "ubuntu/xenial64"
 		proxy.vm.hostname = "proxy"
 		proxy.vm.network "private_network", ip: "192.168.40.99"
-		proxy.vm.network "forwarded_port", guest:5000, host:5000, auto_correct: true
+		proxy.vm.network "forwarded_port", guest:80, host:5000, auto_correct: true
 		proxy.vm.provider "virtualbox" do |vb|
-			vb.memory = "1024"  
+			vb.memory = "512"  
 		end
 		proxy.vm.synced_folder "proxy", "/vagrant"  
 		proxy.vm.provision "shell", path: "proxy.sh"
@@ -18,9 +18,8 @@
 		web.vm.box = "ubuntu/xenial64"
 		web.vm.hostname = "web"
 		web.vm.network "private_network", ip: "192.168.40.100"
-		web.vm.network "forwarded_port", guest:80, host:8080, auto_correct: true
 		web.vm.provider "virtualbox" do |vb|
-			vb.memory = "1024"  
+			vb.memory = "512"  
 		end
 		web.vm.synced_folder "src", "/var/www/html"  
 		web.vm.provision "shell", path: "server.sh"

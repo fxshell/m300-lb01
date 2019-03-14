@@ -4,7 +4,7 @@
 #
 
 ufw enable
-ufw allow 5000
+ufw allow http
 ufw allow from 192.168.40.1 to any port 22
 
 apt-get update -y

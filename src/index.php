@@ -2,7 +2,7 @@
 $servername = "192.168.55.101";
 $username = "root";
 $password = "admin";
-$dbname = "sensoren";
+$dbname = "data_set";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
