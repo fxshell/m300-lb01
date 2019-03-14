@@ -1,5 +1,7 @@
 # Dokumentation Modul 300 LB01
 
+Make new branch from commit faa5e08e4491246865fb9aa85955ea7abcc5b7a0 (where the db still works and then first add reverse proxy and then firewall and finally some small mysql changes)
+
 ## Inhaltsverzeichnis
 
 -   01 - Einstieg
