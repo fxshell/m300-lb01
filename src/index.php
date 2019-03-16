@@ -1,5 +1,5 @@
 <?php
-$servername = "192.168.55.101";
+$servername = "192.168.40.101";
 $username = "root";
 $password = "admin";
 $dbname = "data_set";

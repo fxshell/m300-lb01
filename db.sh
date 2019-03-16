@@ -3,11 +3,12 @@
 #	Datenbank installieren und Konfigurieren
 #
 
-apt update -y
 
 ufw enable
 ufw allow from 192.168.40.100 to any port 3306
 ufw allow from 192.168.40.1 to any port 22
+
+apt update -y
 
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password secret_password'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password secret_password'
