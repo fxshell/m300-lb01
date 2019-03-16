@@ -73,11 +73,8 @@ Ausgehende Verbindungen werden standardmässig erlaubt.
 ### Reverse Proxy
 
 ```
-listen 5000
-<VirtualHost *:5000>
- ProxyPass "/proxy" "http://192.168.40.100:80/"
- ProxyPassReverse "/proxy" "http://192.168.40.100:80/"
-</VirtualHost>
+ProxyPass "/proxy" "http://192.168.40.100"
+ProxyPassReverse "/proxy" "http://192.168.40.100"
 ```
 
 ### Benutzer
@@ -114,11 +111,15 @@ Auf eine VM wird mit folgendem Befehl per SSH zugegriffen: `vagrant ssh proxy`, 
 
 ### Testfälle
 
-| Testfall                              | Resultat                                                                                                 |
-| ------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Von Client: `curl 192.168.40.99:5000` | Der Systemverwalter unter Linux                                                                          |
-| `nobody`                              | Wird von Prozessen als Benutzererkennung verwendet, wenn nur ein Minimum an Rechten vergeben werden soll |
-| `mysql`                               | Benutzer der MySQL Datenbank                                                                             |
+| Testfall                                                                                               | Resultat                                                                                                                                |
+|--------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| Vom Client (192.168.40.1) auf http://localhost:5000 zugreifen                                          | Funktioniert. Die Default Page des Proxy Servers (192.168.40.99) wird angezeigt                                                         |
+| Vom Client (192.168.40.1) auf http://localhost:5000/proxy                                              | Funktioniert. Die PHP-Seite mti den Datenbank-Daten des Webservers (192.168.40.100) wird angezeigt                                      |
+| Vom Client (192.168.40.1) auf http://192.168.40.100 zugreifen                                          | Man erhält keine Antwort, da die Firewall nur Verbindungen vom dem Proxy zulässt                                                        |
+| Vom Client (192.168.40.1) auf die Datenbank (192.168.40.101) zugreifen mit dem Benutzeraccount `root`  | Funktioniert nicht, da die Firewall den Zugriff blockiert und der Benutzer in SQL zusätzlich auch nur für 192.168.40.100 zugelassen ist |
+| Vom Client (192.168.40.1) auf die Datenbank (192.168.40.101) zugreifen mit dem Benutzeraccount `root`  | Funktioniert nicht, da die Firewall den Zugriff blockiert und der Benutzer in SQL zusätzlich auch nur für 192.168.40.100 zugelassen ist |
+| Vom Client (192.168.40.1) auf den Webserver (192.168.40.100) zugreifen per SSH                         | Funktioniert, da eine SSH Verbindung vom Client her zugelassen wurde in der Firewall                                                    |
+| Vom Proxy (192.168.40.99) auf den Webserver (192.168.40.100) zugreifen per SSH                         | Funktioniert nicht, da diese SSH Verbindung in der Firewall nicht zugelassen wurde                                                      |
 
 ### Vergleich Vorwissen / Wissenszuwachs
 
